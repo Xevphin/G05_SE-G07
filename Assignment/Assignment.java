@@ -35,7 +35,8 @@ class Encoded{
         return count;
     }
 
-    // Validates that input contains only uppercase letters, digits, and spaces
+    // CONTRIBUTED BY PUTRA NURIMAN AKMAL
+    // Validates that input contains only lowercase letters, digits, and spaces
     public boolean checkStringValidity(String inputText) {
         for (char c : inputText.toCharArray()) {
             if (!(Character.isLowerCase(c) || Character.isDigit(c) || c == ' ')) {
@@ -164,9 +165,25 @@ public class Assignment {
         // Button click logic
         //CONTRIBUTED BY ABDUL RAHIM AND WAN ADAM
         encodeButton.addActionListener(e -> {
-            String input = inputField.getText().trim();
-            Encoded validator = new Encoded(input);
+        String input = inputField.getText().trim();
 
+        // CONTRIBUTED BY PUTRA NURIMAN AKMAL
+        // Debugging improvement:
+        // Prevent empty input from being encoded.
+
+        if(input.isEmpty()){
+
+            JOptionPane.showMessageDialog(
+                frame,
+                "Input cannot be empty.",
+                "Input Error",
+                JOptionPane.ERROR_MESSAGE
+     );
+
+    return;
+}
+
+Encoded validator = new Encoded();
             //Validate input format
             if (!validator.checkStringValidity(input)) {
 
