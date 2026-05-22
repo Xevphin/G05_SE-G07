@@ -5,19 +5,19 @@ package Assignment;
 //CONTRIBUTED BY NISA//
 import javax.swing.*;
 
-class Assignment{
+class Encoded{
 
     private String inputText;
     private int charCount;
     private String resultText;
     private final String groupID = "G05/SE-G07"; // Hardcoded secret key
 
-    // Default constructor
-    public Assignment() {}
-    //Sets the input text and performs counting, shifting, and encoding
-    //This avoids method calls inside constructor (warning)
+    public Encoded() {
+        //Default constructor
+    }
 
-    public void Encoded(String inputText) {
+    //Overloaded constructor for input processing and encoding
+    public Encoded(String inputText) {
         this.inputText = inputText;
         this.charCount = countCharacters();
         int finalShift = calculateFinalShift();
@@ -72,7 +72,7 @@ class Assignment{
         return result.toString();
     }
 
-    // === Getters ===
+    // === Getters and Setters ===
 
     public String getResultText() {
         return resultText;
@@ -88,37 +88,58 @@ class Assignment{
 }
 
 public class Assignment {
+    //CONTRIBUTED BY ABDUL RAHIM
+    private JFrame frame;
+    private JTextField inputField;
+    private JButton encodeButton;
+    private JTextArea resultArea;
+    private JLabel shiftLabel;
+    private JLabel charCountLabel;
 
-    public static void main(String[] args) {
+    public Assignment() {
+        initializeGUI();
+    }
 
+    private void initializeGUI() { 
         //Main application window GUI
-        JFrame frame = new JFrame("Text Encoder");
+        //CONTRIBUTED BY ABDUL RAHIM
+        frame = new JFrame("Text Encoder");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(450, 300);
         frame.setLocationRelativeTo(null);
 
         JLabel instructionLabel = new JLabel("Enter text (LOWERCASE letters, digits, spaces only):");
-        JTextField inputField = new JTextField(30);
-        JButton encodeButton = new JButton("Encode");
+        inputField = new JTextField(30);
+        encodeButton = new JButton("Encode");
         
         //Label and text area to display the encoded result
         JLabel resultLabel = new JLabel("Encoded Result:");
-        JTextArea resultArea = new JTextArea(2, 30);
+        resultArea = new JTextArea(2, 30);
         resultArea.setEditable(false); //Block user to edit encoded result
         resultArea.setLineWrap(true); 
         resultArea.setWrapStyleWord(true);
 
         //Label to display the final calceulated shift
-        JLabel shiftLabel = new JLabel("Final Shift: ");
+        shiftLabel = new JLabel("Final Shift: ");
 
         //CONTRIBUTED BY WAN ADAM
         //Label to display the number of non space characters as required
-        JLabel charCountLabel = new JLabel("Non-Space Characters: ");
+        charCountLabel = new JLabel("Non-Space Characters: ");
 
         //Panel to hold and organize UI components
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+
+        // Aligning layout to the left for better readability
+        // CONTRIBUTED BY ABDUL RAHIM
+        instructionLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+        inputField.setAlignmentX(JTextField.LEFT_ALIGNMENT);
+        encodeButton.setAlignmentX(JButton.LEFT_ALIGNMENT);
+        resultLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+        resultArea.setAlignmentX(JTextArea.LEFT_ALIGNMENT);
+        shiftLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+        charCountLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 
         //Add all UI components to the panel
         panel.add(instructionLabel);
@@ -130,23 +151,27 @@ public class Assignment {
         panel.add(new JScrollPane(resultArea));
         panel.add(Box.createVerticalStrut(10));
         panel.add(shiftLabel);
-
-        //CONTRIBUTED BY WAN ADAM
         panel.add(Box.createVerticalStrut(10));
-        panel.add(charCountLabel);
+        panel.add(charCountLabel); //CONTRIBUTED BY WAN ADAM
 
         frame.getContentPane().add(panel);
-        frame.setVisible(true);
 
+        setupActionListeners();
+        frame.setVisible(true);
+    }
+
+    public void setupActionListeners() {
         // Button click logic
+        //CONTRIBUTED BY ABDUL RAHIM AND WAN ADAM
         encodeButton.addActionListener(e -> {
             String input = inputField.getText().trim();
-            Assignment encoder = new Assignment();
+            Encoded validator = new Encoded(input);
 
             //Validate input format
-            if (!encoder.checkStringValidity(input)) {
+            if (!validator.checkStringValidity(input)) {
 
                 //Show error popup if input is invalid
+                //CONTRIBUTED BY WAN ADAM
                 JOptionPane.showMessageDialog(frame,
                         "Invalid input! Only LOWERCASE letters, digits, and spaces allowed.",
                         "Input Error", JOptionPane.ERROR_MESSAGE);
@@ -154,16 +179,26 @@ public class Assignment {
             }
 
             //Process input using overloaded constructor
-            encoder.Encoded(input); // Process input
+            Encoded encoder = new Encoded(input); // Process input
+        
+            //Update UI with results
             resultArea.setText(encoder.getResultText());
             shiftLabel.setText("Final Shift: " + encoder.getFinalShift());
-            //Update UI with non-space character count
             charCountLabel.setText("Non-space Characters: " + encoder.getCharCount());
+            
             //Show success message
+            //CONTRIBUTED BY WAN ADAM
             JOptionPane.showMessageDialog(frame,
                     "Encoding completed successfully!",
                     "Success", JOptionPane.INFORMATION_MESSAGE);
         });
+
+    }
+    public static void main(String[] args) {
+
+        // Run the application
+        //CONTRIBUTED BY ABDUL RAHIM
+        SwingUtilities.invokeLater(() -> new Assignment());
     }
 }
 
