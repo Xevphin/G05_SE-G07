@@ -46,7 +46,7 @@ class Encoded{
         return true;
     }
 
-    
+    //CONTRIBUTED BY NISA
     //Generates a unique shift based on the group's ID using hashCode()
     public int generateShift() {
         return Math.abs(groupID.hashCode()) % 10 + 1;
@@ -89,6 +89,7 @@ class Encoded{
 }
 
 public class Assignment {
+    //Main application class with GUI and event handling
     //CONTRIBUTED BY ABDUL RAHIM
     private JFrame frame;
     private JTextField inputField;
@@ -143,6 +144,7 @@ public class Assignment {
         charCountLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 
         //Add all UI components to the panel
+        //CONTRIBUTED BY WAN ADAM
         panel.add(instructionLabel);
         panel.add(inputField);
         panel.add(Box.createVerticalStrut(10));
@@ -153,7 +155,7 @@ public class Assignment {
         panel.add(Box.createVerticalStrut(10));
         panel.add(shiftLabel);
         panel.add(Box.createVerticalStrut(10));
-        panel.add(charCountLabel); //CONTRIBUTED BY WAN ADAM
+        panel.add(charCountLabel); 
 
         frame.getContentPane().add(panel);
 
@@ -218,5 +220,3 @@ Encoded validator = new Encoded();
         SwingUtilities.invokeLater(() -> new Assignment());
     }
 }
-
-
